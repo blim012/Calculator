@@ -23,14 +23,14 @@ function divide(op1, op2)
 
 function equal()
 {
-    //precondition where this is only called when full eq
+    //precondition where this is only called when full equation
     const op1 = parseFloat(input.op1);
     const op2 = parseFloat(input.op2);
     const result = operate(op1, op2, input.operator);
 
-    input.op1 = result;
+    result === 'OOPS' ? input.op1 = '' : input.op1 = result.toString(); 
     input.op2 = '';
-    input.operator = ''; //may not be needed
+    input.operator = ''; 
     console.log(input);
 }
 
@@ -89,6 +89,7 @@ function operatorInput(operator)
 function isFullEquation()
 {
     if(input.op1 != '' && input.op2 != '' && input.operator != '') return true;
+    console.log('nope');
     return false;
 }
 
