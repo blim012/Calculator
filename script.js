@@ -65,7 +65,8 @@ function operate(op1, op2, operator)
 
 function numberInput(numString)
 {
-    //check to see if it'll get too long here
+    //check to see if the number is too long for the display?
+
     console.log('input: ' + numString);
     input.currentNum += numString;
     console.log('currentNum: ' + input.currentNum);
@@ -73,17 +74,18 @@ function numberInput(numString)
 
 function operatorInput(operator)
 {
+    setOperand();
+    if(isFullEquation()) equal();
+    
+    input.operator = operator;
+    console.log(input.operator);
+}
+
+function setOperand()
+{
     if(input.currentNum === '') return;
     input.op1 === '' ? input.op1 = input.currentNum : input.op2 = input.currentNum; 
     input.currentNum = '';
-
-    if(isFullEquation())
-    {
-        equal();
-    }
-
-    input.operator = operator;
-    console.log(input.operator);
 }
 
 function isFullEquation()
@@ -113,6 +115,13 @@ function checkKeyboardInput(key)
             case '*':
             case '/':
                 operatorInput(key);
+                break;
+
+            case '=':
+                setOperand();
+                if(isFullEquation()) equal();
+                break;
+
             default:
         }
     }
