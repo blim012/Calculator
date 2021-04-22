@@ -23,7 +23,7 @@ function divide(op1, op2)
 
 function equal()
 {
-    //precondition where this is only called when full equation
+    if(!isFullEquation()) return;
     const op1 = parseFloat(input.op1);
     const op2 = parseFloat(input.op2);
     const result = operate(op1, op2, input.operator);
@@ -75,7 +75,7 @@ function numberInput(numString)
 function operatorInput(operator)
 {
     setOperand();
-    if(isFullEquation()) equal();
+    equal();
     
     input.operator = operator;
     console.log(input.operator);
@@ -119,7 +119,7 @@ function checkKeyboardInput(key)
 
             case '=':
                 setOperand();
-                if(isFullEquation()) equal();
+                equal();
                 break;
 
             default:
