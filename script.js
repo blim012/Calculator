@@ -65,10 +65,22 @@ function operate(op1, op2, operator)
 
 function numberInput(numString)
 {
-    //check to see if the number is too long for the display?
-
+    //Delete op1 if an operator was not selected after '=',
+    //which starts a new equation instead of using previous result
+    if(input.op1 != '' && input.operator === '') input.op1 = '';
+    
     console.log('input: ' + numString);
-    input.currentNum += numString;
+    input.currentNum === '0' ? input.currentNum = numString : input.currentNum += numString;
+    console.log('currentNum: ' + input.currentNum);
+}
+
+function decimalInput()
+{
+    if(input.currentNum.indexOf('.') === -1)
+    {
+        if(input.currentNum === '') input.currentNum = '0';
+        input.currentNum += '.';    
+    } 
     console.log('currentNum: ' + input.currentNum);
 }
 
@@ -118,10 +130,14 @@ function checkKeyboardInput(key)
                 break;
 
             case '=':
+            case 'Enter':
                 setOperand();
                 equal();
                 break;
 
+            case '.':
+                decimalInput();
+                break;
             default:
         }
     }
@@ -134,3 +150,21 @@ document.addEventListener('DOMContentLoaded', () =>
         checkKeyboardInput(e.key);
     });
 });
+
+/*
+TODO::
+    - Prevent leading 0's in operands
+    - implement decimals numbers
+    - implement clear (AC and/or C, where AC clears everything in the input obj, and
+                       C clears only the currentNum)
+    - implement calculator UI
+    - implement calculator input/output display
+        - Prevent numbers from being too long and stay in display
+    - implement calculator button listeners
+    - implement negatives
+        - Make it a toggle that just appends '-' to the beginning of the string?
+        - Alternatively, since we're already checking for '-' in our operator check,
+          maybe it's better to just add a boolean in our input?
+        - One second thought, maybe don't allow negatives via keyboard, but allow it 
+          on the UI buttons instead, and use the first implementation mentioned here
+*/
