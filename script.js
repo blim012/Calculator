@@ -32,6 +32,8 @@ function equal()
     input.op2 = '';
     input.operator = ''; 
     console.log(input);
+
+    updateDisplay(result);
 }
 
 function operate(op1, op2, operator)
@@ -72,6 +74,7 @@ function numberInput(numString)
     console.log('input: ' + numString);
     input.currentNum === '0' ? input.currentNum = numString : input.currentNum += numString;
     console.log('currentNum: ' + input.currentNum);
+    updateDisplay(input.currentNum);
 }
 
 function decimalInput()
@@ -82,6 +85,7 @@ function decimalInput()
         input.currentNum += '.';    
     } 
     console.log('currentNum: ' + input.currentNum);
+    updateDisplay(input.currentNum);
 }
 
 function operatorInput(operator)
@@ -93,9 +97,22 @@ function operatorInput(operator)
     console.log(input.operator);
 }
 
+function toggleSign()
+{
+    if(input.currentNum != '')
+    {
+        input.currentNum.indexOf('-') === -1 ? 
+            input.currentNum = `-${input.currentNum}` :
+            input.currentNum = input.currentNum.slice(1);
+    }
+    console.log(input.currentNum);
+    updateDisplay(input.currentNum);
+}
+
 function clear()
 {
     input.currentNum = '';
+    updateDisplay(input.currentNum);
 }
 
 function allClear()
@@ -104,6 +121,7 @@ function allClear()
     {
         input[key] = '';
     }
+    updateDisplay(input.currentNum);
 }
 
 function setOperand()
@@ -118,11 +136,6 @@ function isFullEquation()
     if(input.op1 != '' && input.op2 != '' && input.operator != '') return true;
     console.log('nope');
     return false;
-}
-
-function printCurrentNum()
-{
-    console.log(input.currentNum);
 }
 
 function checkKeyboardInput(key)
@@ -164,8 +177,43 @@ function checkKeyboardInput(key)
     }
 }
 
-document.addEventListener('DOMContentLoaded', () =>
+function updateDisplay(numString)
 {
+    const screen = document.querySelector('#screen');
+    screen.textContent = numString;
+}
+
+document.addEventListener('DOMContentLoaded', () =>
+{  
+    const decimalButton = document.querySelector('#decimal');
+    const signButton = document.querySelector('#sign');
+    const clearButton = document.querySelector('#clear');
+    const clearAllButton = document.querySelector('#all-clear');
+    const equalButton = document.querySelector('#equal');
+    const grid = document.querySelector('#grid');
+    const numberButtonList = grid.querySelectorAll('.number');
+    const operatorButtonList = grid.querySelectorAll('.operator');
+
+    signButton.addEventListener('click', toggleSign);
+    decimalButton.addEventListener('click', decimalInput);
+    clearButton.addEventListener('click', clear);
+    clearAllButton.addEventListener('click', allClear);
+    equalButton.addEventListener('click', () =>
+    {
+        setOperand();
+        equal();
+    });
+
+    numberButtonList.forEach((numberButton) => 
+    {
+        numberButton.addEventListener('click', () => numberInput(numberButton.value));
+    });
+
+    operatorButtonList.forEach((operatorButton) => 
+    {
+        operatorButton.addEventListener('click', () => operatorInput(operatorButton.value));
+    });
+
     document.addEventListener('keydown', (e) =>
     {
         checkKeyboardInput(e.key);
@@ -174,14 +222,6 @@ document.addEventListener('DOMContentLoaded', () =>
 
 /*
 TODO::
-    - implement calculator UI
-    - implement calculator input/output display
-        - Prevent numbers from being too long and stay in display
-    - implement calculator button listeners
-    - implement negatives
-        - Make it a toggle that just appends '-' to the beginning of the string?
-        - Alternatively, since we're already checking for '-' in our operator check,
-          maybe it's better to just add a boolean in our input?
-        - One second thought, maybe don't allow negatives via keyboard, but allow it 
-          on the UI buttons instead, and use the first implementation mentioned here
+    - Prevent numbers from being too long and stay in display
+    - Center the display text
 */
