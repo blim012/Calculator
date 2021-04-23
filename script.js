@@ -93,6 +93,19 @@ function operatorInput(operator)
     console.log(input.operator);
 }
 
+function clear()
+{
+    input.currentNum = '';
+}
+
+function allClear()
+{
+    for(let key in input)
+    {
+        input[key] = '';
+    }
+}
+
 function setOperand()
 {
     if(input.currentNum === '') return;
@@ -138,6 +151,14 @@ function checkKeyboardInput(key)
             case '.':
                 decimalInput();
                 break;
+
+            case 'Escape':
+                allClear();
+                break;
+
+            case 'Backspace':
+            case 'c':
+                clear();
             default:
         }
     }
@@ -153,10 +174,6 @@ document.addEventListener('DOMContentLoaded', () =>
 
 /*
 TODO::
-    - Prevent leading 0's in operands
-    - implement decimals numbers
-    - implement clear (AC and/or C, where AC clears everything in the input obj, and
-                       C clears only the currentNum)
     - implement calculator UI
     - implement calculator input/output display
         - Prevent numbers from being too long and stay in display
