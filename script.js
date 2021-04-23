@@ -99,14 +99,23 @@ function operatorInput(operator)
 
 function toggleSign()
 {
-    if(input.currentNum != '')
+    //If a user flips the sign of a result of an equation
+    if(input.op1 != '' && input.operator === '')
+    {
+        input.op1.indexOf('-') === -1 ? 
+            input.op1 = `-${input.op1}` :
+            input.op1 = input.op1.slice(1);
+        
+        updateDisplay(input.op1);
+    }
+    else if(input.currentNum != '')
     {
         input.currentNum.indexOf('-') === -1 ? 
             input.currentNum = `-${input.currentNum}` :
             input.currentNum = input.currentNum.slice(1);
+        
+        updateDisplay(input.currentNum);
     }
-    console.log(input.currentNum);
-    updateDisplay(input.currentNum);
 }
 
 function clear()
@@ -224,4 +233,5 @@ document.addEventListener('DOMContentLoaded', () =>
 TODO::
     - Prevent numbers from being too long and stay in display
     - Center the display text
+    - update README
 */
