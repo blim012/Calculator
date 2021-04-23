@@ -64,11 +64,24 @@ button:active
 #screen
 {
     grid-area: sc;
-    font-size: 2rem;
+    font-size: 2.5rem;
     text-align: end;
+    align-self: center;
+    width: 100%;
+    height: 100%;
     background-color: #242424;
     color: #DBDBDB;
     margin-bottom: 0.5rem;
+}
+
+.clear
+{
+    color: #FF5956;
+}
+
+.operator
+{
+    color: #5F4060;
 }
 
 #all-clear { grid-area: ac; }
@@ -90,13 +103,3 @@ button:active
 #nine { grid-area: nine; }
 #zero { grid-area: zero; }
 #decimal { grid-area: f; }
-
-.clear
-{
-    color: #FF5956;
-}
-
-.operator
-{
-    color: #5F4060;
-}
