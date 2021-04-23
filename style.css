@@ -1,6 +1,6 @@
 html
 {
-    background-color: #aeffd8;
+    background-color: #2b3a67;
 }
 
 body
@@ -12,8 +12,22 @@ body
 
 button
 {
-    border-radius: 1rem;
+    background-color: #ffcb90;
+    border: none;
+    border-radius: 0.5rem;
     font-size: 1.5rem;
+    transition: 0.1s border linear;
+}
+
+button:hover
+{
+    background-color: #FFA33A;
+    border: 0.25rem solid #DE7700;
+}
+
+button:active
+{
+    background-color: #DE7700;
 }
 
 #calculator
@@ -24,15 +38,14 @@ button
     transform: translate(-50%, -50%);
     width: 22rem;
     height: 30rem;
-    border: 1.5rem solid #8fdc97;
+    border: 1.5rem solid #496a81;
     border-radius: 2rem;
-    background-color: #8affc1;
+    background-color: #66999b;
 }
 
 #grid
 {
     box-sizing: border-box;
-    border: 2px solid;
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     grid-template-rows: repeat(6, 1fr);
@@ -43,6 +56,7 @@ button
     'four  five  six   subtract'
     'one   two   three addition'
     'zero  zero  f     equal';
+    gap: 0.2rem;
     padding: 1rem;
     height: 100%;
 }
@@ -52,101 +66,37 @@ button
     grid-area: sc;
     font-size: 2rem;
     text-align: end;
-    background-color: slategray;
+    background-color: #242424;
+    color: #DBDBDB;
     margin-bottom: 0.5rem;
 }
 
-#all-clear
+#all-clear { grid-area: ac; }
+#clear { grid-area: c; }
+#sign { grid-area: s; }
+#divide { grid-area: divide; }
+#multiply { grid-area: multiply; }
+#subtract { grid-area: subtract; }
+#addition { grid-area: addition; }
+#equal { grid-area: equal; }
+#one { grid-area: one; }
+#two { grid-area: two; }
+#three { grid-area: three; }
+#four { grid-area: four; }
+#five { grid-area: five; }
+#six { grid-area: six; }
+#seven { grid-area: seven; }
+#eight { grid-area: eight; }
+#nine { grid-area: nine; }
+#zero { grid-area: zero; }
+#decimal { grid-area: f; }
+
+.clear
 {
-    grid-area: ac;
+    color: #FF5956;
 }
 
-#clear
+.operator
 {
-    grid-area: c;
-}
-
-#sign
-{
-    grid-area: s;
-}
-
-#divide
-{
-    grid-area: divide;
-}
-
-#multiply
-{
-    grid-area: multiply;
-}
-
-#subtract
-{
-    grid-area: subtract;
-}
-
-#addition
-{
-    grid-area: addition;
-}
-
-#equal
-{
-    grid-area: equal;
-}
-
-#one
-{
-    grid-area: one;
-}
-
-#two
-{
-    grid-area: two;
-}
-
-#three
-{
-    grid-area: three;
-}
-
-#four
-{
-    grid-area: four;
-}
-
-#five
-{
-    grid-area: five;
-}
-
-#six
-{
-    grid-area: six;
-}
-
-#seven
-{
-    grid-area: seven;
-}
-
-#eight
-{
-    grid-area: eight;
-}
-
-#nine
-{
-    grid-area: nine;
-}
-
-#zero
-{
-    grid-area: zero;
-}
-
-#decimal
-{
-    grid-area: f;
+    color: #5F4060;
 }
