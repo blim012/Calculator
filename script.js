@@ -26,12 +26,19 @@ function equal()
     if(!isFullEquation()) return;
     const op1 = parseFloat(input.op1);
     const op2 = parseFloat(input.op2);
-    const result = operate(op1, op2, input.operator);
+    let result = operate(op1, op2, input.operator);
 
-    result === 'OOPS' ? input.op1 = '' : input.op1 = result.toString(); 
+    if(result === 'OOPS')
+    {
+        allClear();
+        updateDisplay('Just Don\'t');
+        return;
+    }
+    if(isMaxLength(result.toString())) result = numberToExponential(result.toString()); 
+
+    input.op1 = result.toString(); 
     input.op2 = '';
     input.operator = ''; 
-    console.log(input);
 
     updateDisplay(result);
 }
@@ -61,30 +68,30 @@ function operate(op1, op2, operator)
             result = 'OOPS';
     }
 
-    console.log(result);
     return result;
 }
 
 function numberInput(numString)
 {
+    if(isMaxLength(input.currentNum)) return;
+
     //Delete op1 if an operator was not selected after '=',
     //which starts a new equation instead of using previous result
     if(input.op1 != '' && input.operator === '') input.op1 = '';
     
-    console.log('input: ' + numString);
     input.currentNum === '0' ? input.currentNum = numString : input.currentNum += numString;
-    console.log('currentNum: ' + input.currentNum);
     updateDisplay(input.currentNum);
 }
 
 function decimalInput()
 {
+    if(isMaxLength(input.currentNum)) return;
+
     if(input.currentNum.indexOf('.') === -1)
     {
         if(input.currentNum === '') input.currentNum = '0';
         input.currentNum += '.';    
     } 
-    console.log('currentNum: ' + input.currentNum);
     updateDisplay(input.currentNum);
 }
 
@@ -92,9 +99,7 @@ function operatorInput(operator)
 {
     setOperand();
     equal();
-    
     input.operator = operator;
-    console.log(input.operator);
 }
 
 function toggleSign()
@@ -102,18 +107,22 @@ function toggleSign()
     //If a user flips the sign of a result of an equation
     if(input.op1 != '' && input.operator === '')
     {
-        input.op1.indexOf('-') === -1 ? 
-            input.op1 = `-${input.op1}` :
-            input.op1 = input.op1.slice(1);
-        
+        if(input.op1.indexOf('-') === -1)
+        {
+            if(isMaxLength(input.op1)) return; 
+            input.op1 = `-${input.op1}`;
+        }
+        else input.op1 = input.op1.slice(1);
         updateDisplay(input.op1);
     }
     else if(input.currentNum != '')
     {
-        input.currentNum.indexOf('-') === -1 ? 
-            input.currentNum = `-${input.currentNum}` :
-            input.currentNum = input.currentNum.slice(1);
-        
+        if(input.currentNum.indexOf('-') === -1)
+        {
+            if(isMaxLength(input.currentNum)) return;
+            input.currentNum = `-${input.currentNum}`;
+        }
+        else input.currentNum = input.currentNum.slice(1);
         updateDisplay(input.currentNum);
     }
 }
@@ -140,11 +149,23 @@ function setOperand()
     input.currentNum = '';
 }
 
+function isMaxLength(numString)
+{
+    if(numString.length >= 10) return true; 
+    return false;
+}
+
 function isFullEquation()
 {
     if(input.op1 != '' && input.op2 != '' && input.operator != '') return true;
-    console.log('nope');
     return false;
+}
+
+function numberToExponential(numString)
+{
+    numString = parseFloat(numString).toExponential();
+    if(numString.length > 10) numString = parseFloat(numString).toExponential(3);
+    return numString;
 }
 
 function checkKeyboardInput(key)
@@ -228,10 +249,3 @@ document.addEventListener('DOMContentLoaded', () =>
         checkKeyboardInput(e.key);
     });
 });
-
-/*
-TODO::
-    - Prevent numbers from being too long and stay in display
-    - Center the display text
-    - update README
-*/
